@@ -1,30 +1,32 @@
 package db
 
 import (
+	"context"
 	"fmt"
-
-	"github.com/19sebastian95/Gambit/gambituser/models"
+	"log"
 )
 
-func SignUp(sig models.SignUp) error {
+// func SignUp(sig models.SignUp) error {
+func SignUp() error {
 	fmt.Println("Comienza Registro")
 
-	err := DbConnectRDSAWS()
+	err := DbConnectSlqServer()
 	if err != nil {
 		return err
 	}
 
-	defer Db.Close()
+	//err = SelectUsert()
 
-	sentencia := "SELECT * FROM Users"
+	return nil
+}
 
-	fmt.Println(sentencia)
+func SelectUsert() error {
+	ctx := context.Background()
 
-	_, err = Db.Exec(sentencia)
+	err := db.QueryRowContext(ctx, "SELECT * FROM Users").Scan()
 
 	if err != nil {
-		fmt.Println(err.Error())
-		return err
+		log.Fatal(err.Error())
 	}
 
 	return nil

@@ -10,11 +10,11 @@ import (
 	"github.com/19sebastian95/Gambit/gambituser/db"
 	"github.com/19sebastian95/Gambit/gambituser/models"
 	"github.com/aws/aws-lambda-go/events"
-	lambda "github.com/aws/aws-lambda-go/lambda"
 )
 
 func main() {
-	lambda.Start(EjecutorLambda)
+	//lambda.Start(EjecutorLambda)
+	db.SignUp()
 }
 
 func EjecutorLambda(ctx context.Context, event events.CognitoEventUserPoolsPostConfirmation) (events.CognitoEventUserPoolsPostConfirmation, error) {
@@ -44,7 +44,7 @@ func EjecutorLambda(ctx context.Context, event events.CognitoEventUserPoolsPostC
 		return event, err
 	}
 
-	err = db.SignUp(datos)
+	err = db.SignUp()
 
 	return event, err
 }
